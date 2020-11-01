@@ -1,8 +1,7 @@
 <?php
 
-namespace mojifan\redis;
+namespace wulixb\redis;
 
-use Predis\Client;
 use yii;
 
 /**
@@ -168,8 +167,8 @@ class Connection extends yii\base\Component {
     private $client;
 
     /**
-     * 连接对象
-     * @return Client
+     * @return \RedisCluster
+     * @throws \RedisClusterException
      */
     public function getClient() {
         if (!$this->client) {
@@ -181,6 +180,9 @@ class Connection extends yii\base\Component {
     }
 
     public function __call($name, $params) {
-        return call_user_func_array([$this->getClient(), $name], $params);
+        try {
+            return call_user_func_array([$this->getClient(), $name], $params);
+        } catch (\RedisClusterException $e) {
+        }
     }
 }

@@ -1,7 +1,6 @@
 <?php
-namespace mojifan\redis;
+namespace wulixb\redis;
 
-use Yii;
 use yii\di\Instance;
 
 /**

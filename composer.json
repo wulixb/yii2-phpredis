@@ -1,0 +1,16 @@
+{
+  "name": "wulixb/yii2-phpredis",
+  "description": "Redis Cache, Session for the Yii2",
+  "type": "yii2-extension",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/mojifan/yii2-predis/issues",
+    "source": "https://github.com/mojifan/yii2-predis"
+  },
+  "require": {
+    "yiisoft/yii2": "~2.0.6"
+  },
+  "autoload": {
+    "psr-4": { "wulixb\\redis\\": "" }
+  }
+}
