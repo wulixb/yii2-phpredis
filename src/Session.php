@@ -1,6 +1,6 @@
 <?php
 
-namespace nuwber\yii2redis;
+namespace wluixb\yii2redis;
 
 use yii\base\InvalidConfigException;
 use Yii;
@@ -19,7 +19,7 @@ use Yii;
  * [
  *     'components' => [
  *         'session' => [
- *             'class' => 'nuwber\yii2redis\Session',
+ *             'class' => 'wluixb\yii2redis\Session',
  *             'redis' => [
  *                 'hostname' => 'localhost',
  *                 'port' => 6379,
@@ -36,7 +36,7 @@ use Yii;
  * [
  *     'components' => [
  *         'session' => [
- *             'class' => 'nuwber\yii2redis\Session',
+ *             'class' => 'wluixb\yii2redis\Session',
  *             // 'redis' => 'redis' // id of the connection application component
  *         ],
  *     ],
