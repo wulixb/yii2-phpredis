@@ -1,6 +1,6 @@
 <?php
 
-namespace wluixb\yii2redis;
+namespace wulixb\yii2redis;
 
 use yii\di\Instance;
 
