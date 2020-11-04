@@ -1,8 +1,9 @@
 <?php
-namespace wulixb\redis;
 
-use Yii;
+namespace nuwber\yii2redis;
+
 use yii\base\InvalidConfigException;
+use Yii;
 
 /**
  * Redis Session implements a session component using [redis](http://redis.io/) as the storage medium.
@@ -18,7 +19,12 @@ use yii\base\InvalidConfigException;
  * [
  *     'components' => [
  *         'session' => [
- *             'class' => 'mojifan\redis\Session',
+ *             'class' => 'nuwber\yii2redis\Session',
+ *             'redis' => [
+ *                 'hostname' => 'localhost',
+ *                 'port' => 6379,
+ *                 'database' => 0,
+ *             ]
  *         ],
  *     ],
  * ]
@@ -30,7 +36,7 @@ use yii\base\InvalidConfigException;
  * [
  *     'components' => [
  *         'session' => [
- *             'class' => 'mojifan\redis\Session',
+ *             'class' => 'nuwber\yii2redis\Session',
  *             // 'redis' => 'redis' // id of the connection application component
  *         ],
  *     ],
@@ -39,6 +45,7 @@ use yii\base\InvalidConfigException;
  *
  * @property boolean $useCustomStorage Whether to use custom storage. This property is read-only.
  *
+ * @author Bob chengbin <bob@phpor.me>
  */
 class Session extends \yii\web\Session
 {
@@ -50,6 +57,7 @@ class Session extends \yii\web\Session
      * with a Redis [[Connection]] object.
      */
     public $redis = 'redis';
+
     /**
      * @var string a string prefixed to every cache key so that it is unique. If not set,
      * it will use a prefix generated from [[Application::id]]. You may set this property to be an empty string
@@ -57,7 +65,6 @@ class Session extends \yii\web\Session
      * static value if the cached data needs to be shared among multiple applications.
      */
     public $keyPrefix;
-
 
     /**
      * Initializes the redis Session component.
@@ -70,7 +77,7 @@ class Session extends \yii\web\Session
             $this->redis = Yii::$app->get($this->redis);
         } elseif (is_array($this->redis)) {
             if (!isset($this->redis['class'])) {
-                $this->redis['class'] = Connection::className();
+                $this->redis['class'] = Connection::class;
             }
             $this->redis = Yii::createObject($this->redis);
         }
@@ -80,6 +87,8 @@ class Session extends \yii\web\Session
         if ($this->keyPrefix === null) {
             $this->keyPrefix = substr(md5(Yii::$app->id), 0, 5);
         }
+        $this->redis->open();
+
         parent::init();
     }
 
@@ -115,7 +124,7 @@ class Session extends \yii\web\Session
      */
     public function writeSession($id, $data)
     {
-        return (bool)$this->redis->set($this->calculateKey($id), $data, 'EX', $this->getTimeout());
+        return (bool)$this->redis->setex($this->calculateKey($id), $this->getTimeout(), $data);
     }
 
     /**
@@ -126,8 +135,7 @@ class Session extends \yii\web\Session
      */
     public function destroySession($id)
     {
-        $this->redis->del($this->calculateKey($id));
-        return true;
+        return (bool)$this->redis->del($this->calculateKey($id));
     }
 
     /**

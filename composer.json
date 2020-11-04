@@ -1,16 +1,38 @@
 {
-  "name": "wulixb/yii2-phpredis",
-  "description": "Redis Cache, Session for the Yii2",
-  "type": "yii2-extension",
-  "license": "MIT",
-  "support": {
-    "issues": "https://github.com/mojifan/yii2-predis/issues",
-    "source": "https://github.com/mojifan/yii2-predis"
-  },
+  "name": "nuwber/yii2-phpredis",
+  "description": "yii2 with phpredis",
+  "minimum-stability": "stable",
+  "license": "BSD",
+  "authors": [
+    {
+      "name": "Bob Chengbin",
+      "email": "bob@phpor.me"
+    },
+    {
+      "name": "Andrew",
+      "email": "a.kl@nuwber.com"
+    }
+  ],
   "require": {
-    "yiisoft/yii2": "~2.0.6"
+    "ext-json": "*",
+    "yiisoft/yii2": "~2.0.14",
+    "ext-redis": ">=3",
+    "php": ">=7.0"
   },
   "autoload": {
-    "psr-4": { "wulixb\\redis\\": "" }
-  }
+    "psr-4": {
+      "nuwber\\yii2redis\\": "src/",
+      "nuwber\\yii2redis\\tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "<6.0",
+    "yiisoft/yii2-redis": "^2.0"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  ]
 }
